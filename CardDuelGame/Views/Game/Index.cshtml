@@ -1,0 +1,56 @@
+﻿@{
+    ViewData["Title"] = "Card Duel Game";
+    string[] ranks = { "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K", "A" };
+    string[] suits = { "Hearts", "Diamonds", "Clubs", "Spades" };
+}
+
+<h1 id="play">PLAY</h1>
+<h1 id="game">Card Duel Game</h1>
+
+<form method="post" asp-action="Duel">
+    <label>Choose Game Mode:</label><br />
+    <input type="radio" name="mode" value="computer" checked onchange="toggleFriendCard()" /> Play with Computer<br />
+    <input type="radio" name="mode" value="multiplayer" onchange="toggleFriendCard()" /> Play with Friend<br /><br />
+
+    <label>Your Card:</label><br />
+    <select name="playerCard">
+        @foreach (var rank in ranks)
+        {
+            foreach (var suit in suits)
+            {
+                <option value="@rank-of-@suit">@rank of @suit</option>
+            }
+        }
+    </select><br /><br />
+
+    <div id="friendCardSection" style="display:none;">
+        <label>Friend's Card (for multiplayer):</label><br />
+        <select name="friendCard">
+            @foreach (var rank in ranks)
+            {
+                foreach (var suit in suits)
+                {
+                    <option value="@rank-of-@suit">@rank of @suit</option>
+                }
+            }
+        </select><br /><br />
+    </div>
+
+    <button type="submit">Duel!</button>
+</form>
+
+<script>
+    function toggleFriendCard() {
+        const mode = document.querySelector('input[name="mode"]:checked').value;
+        const friendSection = document.getElementById("friendCardSection");
+
+        if (mode === "multiplayer") {
+            friendSection.style.display = "block";
+        } else {
+            friendSection.style.display = "none";
+        }
+    }
+
+    // Call once on load to hide/show correctly
+    window.onload = toggleFriendCard;
+</script>

@@ -1,0 +1,40 @@
+﻿@model CardDuelGame.Models.GameModel
+
+<h2 id="gameresult">Game Result</h2>
+
+<div style="display: flex; justify-content: center; gap: 40px; flex-wrap: wrap;">
+
+    <div style="text-align: center;">
+        <h4>Your Card</h4>
+        <div style="padding: 20px; border: 2px solid #007acc; border-radius: 10px; background-color: white;">
+            <img src="~/cards/@Model.PlayerCard.ImageFileName" width="150" style="border-radius: 10px; box-shadow: 0 5px 15px gray;" />
+            <p style="color: black; font-weight: bold; font-size: 18px;">@Model.PlayerCard.Display</p>
+        </div>
+    </div>
+
+    <div style="text-align: center;">
+        <h4>@(ViewBag.Mode == "multiplayer" ? "Friend's Card" : "Computer's Card")</h4>
+        <div style="padding: 20px; border: 2px solid #007acc; border-radius: 10px; background-color: white;">
+            <img src="~/cards/@Model.ComputerCard.ImageFileName" width="150" style="border-radius: 10px; box-shadow: 0 5px 15px gray;" />
+            <p style="color: black; font-weight: bold; font-size: 18px;">@Model.ComputerCard.Display</p>
+        </div>
+    </div>
+
+</div>
+
+<div style="margin-top: 30px;">
+    @if (Model.Winner == "You Win!")
+    {
+        <h3 style="color: green; font-size: 24px;">@Model.Winner</h3>
+    }
+    else if (Model.Winner == "Computer Wins!" || Model.Winner == "Friend Wins!")
+    {
+        <h3 style="color: red; font-size: 24px;">@Model.Winner</h3>
+    }
+    else
+    {
+        <h3 style="color: orange; font-size: 24px;">@Model.Winner</h3>
+    }
+</div>
+
+<a asp-action="Index"><button>Play Again</button></a>
